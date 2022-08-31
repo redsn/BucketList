@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 const newListitem = new Schema({
 
     // Standard Data from API
+    lowerName: {type: String},
     Actors: {type: String},
     Awards: {type: String},
     BoxOffice: {type: String},

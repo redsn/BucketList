@@ -30,6 +30,7 @@ const listAdd = (val) => {
     Movie.create({
 
     // Standard Data from API
+    lowerName: val.Title.toLowerCase(),
     Actors:val.Actors,
     Awards:val.Awards,
     BoxOffice:val.BoxOffice,
@@ -65,6 +66,39 @@ const listAdd = (val) => {
 //==
 
 // SEARCH //
+// Display Single Page
+router.get('/:search', async (req,res) => {
+    const moncheck = req.params.search.toLowerCase();
+    
+    const mongooseResult = Movie.find({lowerName: moncheck});
+    
+    Movie.find({lowerName: moncheck }, async function (err, result) {
+        if(err){
+            return 'An Error has occured...'
+        } else if(result.length > 0) {
+            // console.log('Mongo search');
+            res.status(200).json(await mongooseResult);
+        } else {
+            console.log('api query')
+            const term = req.params.search;
+            const find = `${MOVIE_URL}${MOVIE_KEY}&t=${term}`;
+            const response = await fetch(find);
+            try {
+                const data = await response.json();
+                if(data.Response  ===  "True"){
+                listAdd(data);
+                res.status(201).json({data});
+            }   else {
+                console.log('Failed');
+                res.status(400).json({Message: 'Failed'})
+            }
+            } catch (error) {
+                
+            }
+        }
+    });
+});
+
 
 /// WORKING Backup
 // router.get('/:search', async (req,res) => {
@@ -79,59 +113,3 @@ const listAdd = (val) => {
 //         console.log(error);
 //     }
 // });
-
-// TEST//
-router.get('/:search', async (req,res) => {
-
-    const mongooseResult = Movie.find({Title: req.params.search});
-
-    // if(Movie.find({Title: req.params.search})){
-    //     console.log('found?');
-    //     console.log(mongooseResult);
-    //     // console.log(test.json());
-    //     res.status(200).json(await mongooseResult);
-    // }  else {
-    //     return console.log('????')
-    // }
-
-    Movie.find({Title: req.params.search}, async function (err, result) {
-        if(err){
-            return 'An Error has occured...'
-        } else if(result.length > 0) {
-            res.status(200).json(await mongooseResult);
-        } else {
-            const term = req.params.search;
-            const find = `${MOVIE_URL}${MOVIE_KEY}&t=${term}`;
-            const response = await fetch(find);
-            try {
-                const data = await response.json();
-                listAdd(data);
-                res.status(200).json({data});
-            } catch (error) {
-                
-            }
-        }
-    })
-    // res.status(200).json(await Movie.find({Title: req.params.search}));
-    
-    // try {
-    //     console.log('test for try');
-    //     listCheck(req.params.search);
-    //     console.log('Displayed With Mongoose Connection');
-    //     res.status(200).json(await Movie.find({Title: req.params.search}));
-    // } catch (error) {
-    //     const term = req.params.search;
-    //     const find = `${MOVIE_URL}${MOVIE_KEY}&t=${term}`;
-    //     const response = await fetch(find);
-    //     console.log('Displayed with API connection');
-    //     try{
-    //         const data = await response.json();
-    //         listAdd(data);
-    //         res.status(200).json({data});
-    //     } catch(error){
-    //         console.log(error);
-    //     }
-    // }
-
-})
-
