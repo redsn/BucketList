@@ -21,7 +21,6 @@ const newListitem = new Schema({
     Ratings: { type: Array },
     Released: { type: String },
     Response: { type: String}, 
-    Response: { type: String},
     Runtime: { type: String },
     Title: { type: String },
     Type: { type: String },
