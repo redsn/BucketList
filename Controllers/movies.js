@@ -79,7 +79,7 @@ router.get('/:search', async (req,res) => {
             // console.log('Mongo search');
             res.status(200).json(await mongooseResult);
         } else {
-            console.log('api query')
+            // console.log('api query')
             const term = req.params.search;
             const find = `${MOVIE_URL}${MOVIE_KEY}&t=${term}`;
             const response = await fetch(find);
