@@ -21,7 +21,8 @@
 
 ## Getting Started
 
-Start [here](http://google.com)
+[Trello](https://trello.com/b/xBeIjV7q/project3bl)
+Start [herePLACEHOLDER](http://google.com)
 
 ## Future Enhancements
 - Add more catalog depth

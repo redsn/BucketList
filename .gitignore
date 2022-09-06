@@ -1,2 +1,7 @@
 .env
 node_modules
+todo
+.vscode
+readmeimg/.DS_Store
+.DS_Store
+firebase-secret-key.json
