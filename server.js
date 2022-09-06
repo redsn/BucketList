@@ -20,7 +20,7 @@ const movieRouter = require('./Controllers/movies');
 // Middleware
 //===
 
-const { PORT, MONGO_URL, PRIVATE_KEY_ID, PRIVATE_KEY } = process.env;
+const { PORT, MONGO_URL} = process.env;
 const db = mongoose.connection;
 mongoose.connect(MONGO_URL);
 
@@ -41,23 +41,23 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-admin.initializeApp({
-    credential: admin.credential.cert(
-        {
-            "type": "service_account",
-            "project_id": "bucklist-app",
-            "private_key_id": PRIVATE_KEY_ID,
-            "private_key": PRIVATE_KEY.replace(/\\n/g, '\n') ,
-            "client_email": "firebase-adminsdk-3w9u8@bucklist-app.iam.gserviceaccount.com",
-            "client_id": "104022318570745435276",
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3w9u8%40bucklist-app.iam.gserviceaccount.com"
-          }
+// admin.initializeApp({
+//     credential: admin.credential.cert(
+//         {
+//             "type": "service_account",
+//             "project_id": "bucklist-app",
+//             "private_key_id": PRIVATE_KEY_ID,
+//             "private_key": PRIVATE_KEY.replace(/\\n/g, '\n') ,
+//             "client_email": "firebase-adminsdk-3w9u8@bucklist-app.iam.gserviceaccount.com",
+//             "client_id": "104022318570745435276",
+//             "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+//             "token_uri": "https://oauth2.googleapis.com/token",
+//             "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+//             "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-3w9u8%40bucklist-app.iam.gserviceaccount.com"
+//           }
           
-    )
-})
+//     )
+// })
 //===
 // AUTH MIDDLEWARE
 //===
