@@ -66,18 +66,68 @@ const listAdd = (val) => {
 //==
 
 // SEARCH //
+router.get('/view/:id', async(req,res)=> {
+    // console.log(req.params.id);
+    const viewOne = req.params.id;
+
+    Movie.findOne({'imdbID': viewOne}, async function (err, result) {
+        console.log(result);
+        if(err){
+            return 'Error'
+        } else {
+            res.status(200).json(result);
+        }
+    })
+    
+})
+// PersonModel.update(
+//     { _id: person._id }, 
+//     { $push: { friends: friend } },
+//     done
+// );
+
+router.put('/view/:id', async (req,res)=> {
+    // console.log(req.params.id);
+    // console.log(req.body);
+    console.log(req.body.onList)
+    console.log(req.body.complete)
+    if(req.body.onList){
+    try{
+        //push for onList
+        Movie.findOneAndUpdate({
+            'imdbID': req.params.id
+        }, { $push: {onList: req.body.onList }},
+        function (err, pass){
+            if(err){
+                // console.log(err);
+            } else {
+                // console.log(pass);
+            }
+        }
+        )
+    }  catch(error){
+        console.log(error)
+    }}
+})
 // Display Single Page
 router.get('/:search', async (req,res) => {
+
     const moncheck = req.params.search.toLowerCase();
     
-    const mongooseResult = Movie.find({lowerName: moncheck});
+    const mongooseResult = await Movie.find({'lowerName': { $regex: '^' + moncheck, $options: 'i'} }).exec();
+
+    // var result = await Books.find({ 'authors': { $regex: '^' + search_text, $options: 'i' } }).exec();
+
+    const test = await Movie.find({ 'lowerName': { $regex: '^' + moncheck, $options: 'i'} }).exec();
+    // console.log(moncheck);
     
-    Movie.find({lowerName: moncheck }, async function (err, result) {
+    Movie.find({'lowerName': {$regex: '^' + moncheck, $options: 'i'} }, async function (err, result) {
         if(err){
             return 'An Error has occured...'
         } else if(result.length > 0) {
+            // console.log(result.length)
             // console.log('Mongo search');
-            res.status(200).json(await mongooseResult);
+            res.status(200).json(mongooseResult);
         } else {
             // console.log('api query')
             const term = req.params.search;
@@ -98,6 +148,7 @@ router.get('/:search', async (req,res) => {
         }
     });
 });
+
 
 
 /// WORKING Backup
