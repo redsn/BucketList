@@ -71,7 +71,7 @@ router.get('/view/:id', async(req,res)=> {
     const viewOne = req.params.id;
 
     Movie.findOne({'imdbID': viewOne}, async function (err, result) {
-        console.log(result);
+        // console.log(result);
         if(err){
             return 'Error'
         } else {
@@ -85,6 +85,45 @@ router.get('/view/:id', async(req,res)=> {
 //     { $push: { friends: friend } },
 //     done
 // );
+
+router.put('/mod/:id', async (req,res) => {
+    console.log('forwhy')
+    console.log(req.body);
+    try {
+        if(req.body.onList){
+            Movie.findOneAndUpdate({
+                'imdbID': req.params.id
+            }, { $pull: {onList: req.body.onList}},
+            function(err,pass){
+                if(err){
+
+                } else{
+
+                }
+             }
+            )
+        }
+        try {
+            if(req.body.complete){
+                Movie.findOneAndUpdate({
+                    'imdbID': req.params.id
+                }, {$pull: {complete: req.body.complete}},
+                function (err,pass){
+                    if(err){
+
+                    } else {
+                        
+                    }
+                }
+                )
+            }
+        } catch (error) {
+            
+        }
+    } catch (error) {
+        
+    }
+})
 
 router.put('/view/:id', async (req,res)=> {
     try{
