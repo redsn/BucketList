@@ -87,12 +87,8 @@ router.get('/view/:id', async(req,res)=> {
 // );
 
 router.put('/view/:id', async (req,res)=> {
-    // console.log(req.params.id);
-    // console.log(req.body);
-    console.log(req.body.onList)
-    console.log(req.body.complete)
-    if(req.body.onList){
     try{
+        if(req.body.onList){
         //push for onList
         Movie.findOneAndUpdate({
             'imdbID': req.params.id
@@ -104,10 +100,26 @@ router.put('/view/:id', async (req,res)=> {
                 // console.log(pass);
             }
         }
-        )
+        )}
+    try{
+        if(req.body.complete){
+                //push for complete
+                Movie.findOneAndUpdate({
+                    'imdbID': req.params.id
+                }, { $push: {complete: req.body.complete }},
+                function (err, pass){
+                    if(err){
+                        // console.log(err);
+                    } else {
+                        // console.log(pass);
+                    }
+                }
+                )
+            }
+    } catch(error){}
     }  catch(error){
-        console.log(error)
-    }}
+        // console.log(error)
+    };
 })
 // Display Single Page
 router.get('/:search', async (req,res) => {
