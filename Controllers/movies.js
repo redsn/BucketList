@@ -86,9 +86,28 @@ router.get('/view/:id', async(req,res)=> {
 //     done
 // );
 
+router.get('/profile', async(req,res)=> {
+    Movie.find({}, async function (err,result){
+        if(err){
+            return 'error'
+        } else{
+            res.status(200).json(result);
+        }
+    })
+})
+
+router.get('/browse', async(req,res) => {
+    Movie.find({}, async function (err,result){
+        if(err){
+            return 'error'
+        } else{
+            res.status(200).json(result);
+        }
+    })
+})
+
 router.put('/mod/:id', async (req,res) => {
-    console.log('forwhy')
-    console.log(req.body);
+
     try {
         if(req.body.onList){
             Movie.findOneAndUpdate({
@@ -112,7 +131,7 @@ router.put('/mod/:id', async (req,res) => {
                     if(err){
 
                     } else {
-                        
+
                     }
                 }
                 )
