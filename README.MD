@@ -14,6 +14,7 @@
     Node.js
     React
     styled
+    MongoDB
 
 
 ## Screenshots
