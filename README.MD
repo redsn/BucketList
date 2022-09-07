@@ -11,6 +11,10 @@
 
 ## Technologies Used
     Movie Api (As a base)
+    Node.js
+    React
+    styled
+
 
 ## Screenshots
 ![Overview](./readmeimg/overview.png)
